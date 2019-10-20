@@ -1,6 +1,8 @@
 use std::fmt;
+use std::env;
 use reqwest;
 use serde_json::{Value};
+
 
 pub struct MBTAClient {
     
@@ -28,7 +30,12 @@ impl MBTAClient {
     }
 
     fn get(url: &str) -> Option<Value> {
-        let mut response = match reqwest::get(url) {
+        let client = reqwest::Client::new();
+        let mut request = client.get(url);
+        if let Ok(token) = env::var("API_TOKEN") {
+            request = request.header("x-api-key", token);
+        }
+        let mut response = match request.send() {
             Ok(response) => response,
             Err(_) => {
                 // error!("HTTP Request Error -- {:?}", error);
