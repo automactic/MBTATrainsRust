@@ -9,6 +9,6 @@ use api_client::MBTAClient;
 fn main() {
     println!("Hello, world!");
     let client = MBTAClient{};
-    let vehicles = client.get_vehicles();
+    let vehicles = client.get_vehicles(Line::Orange);
     println!("{}", vehicles[0]);
 }

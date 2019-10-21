@@ -2,6 +2,7 @@ use std::fmt;
 use std::env;
 use reqwest;
 use serde_json::{Value};
+use super::enums::Line;
 
 
 pub struct MBTAClient {
@@ -9,9 +10,10 @@ pub struct MBTAClient {
 }
 
 impl MBTAClient {
-    pub fn get_vehicles(&self) -> Vec<Vehicle> {
+    pub fn get_vehicles(&self, line: Line) -> Vec<Vehicle> {
         let url = "https://api-v3.mbta.com/vehicles";
-        let response_json = match MBTAClient::get(url) {
+        let query = [(String::from("filter[route]"), String::from(line.as_str()))];
+        let response_json = match MBTAClient::get(url, &query) {
             Some(response_json) => response_json,
             None=> return Vec::new()
         };
@@ -29,9 +31,9 @@ impl MBTAClient {
         vehicles
     }
 
-    fn get(url: &str) -> Option<Value> {
+    fn get(url: &str, query: &[(String, String)]) -> Option<Value> {
         let client = reqwest::Client::new();
-        let mut request = client.get(url);
+        let mut request = client.get(url).query(query);
         if let Ok(token) = env::var("API_TOKEN") {
             request = request.header("x-api-key", token);
         }
