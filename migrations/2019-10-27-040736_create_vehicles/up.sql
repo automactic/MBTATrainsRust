@@ -1,0 +1,4 @@
+CREATE TABLE vehicles (
+    id VARCHAR PRIMARY KEY,
+    label VARCHAR NOT NULL
+)
