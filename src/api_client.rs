@@ -1,9 +1,10 @@
-use std::fmt;
 use std::env;
-use reqwest;
-use serde_json::{Value};
-use super::enums::Line;
 
+use reqwest;
+use serde_json::Value;
+
+use super::entities::Vehicle;
+use super::enums::Line;
 
 pub struct MBTAClient {
     
@@ -53,27 +54,5 @@ impl MBTAClient {
             Err(_) => None
         };
         response_json
-    }
-}
-
-pub struct Vehicle {
-    id: String,
-    label: String,
-}
-
-impl Vehicle {
-    fn from(json: &Value) -> Option<Self> {
-        let id = json["id"].as_str()?;
-        let label = json["attributes"]["label"].as_str()?;
-        Some(Vehicle {
-            id: String::from(id),
-            label: String::from(label),
-        })
-    }
-}
-
-impl fmt::Display for Vehicle {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "({}, {})", self.id, self.label)
     }
 }

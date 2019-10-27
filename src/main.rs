@@ -1,10 +1,10 @@
-mod enums;
+use api_client::MBTAClient;
 use enums::Line;
 
 mod api_client;
-use api_client::MBTAClient;
-
-// #[macro_use] extern crate log;
+mod entities;
+mod enums;
+mod database;
 
 fn main() {
     println!("Hello, world!");
