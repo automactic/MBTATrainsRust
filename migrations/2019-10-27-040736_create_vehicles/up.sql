@@ -1,4 +1,5 @@
 CREATE TABLE vehicles (
     id VARCHAR PRIMARY KEY,
-    label VARCHAR NOT NULL
+    label VARCHAR NOT NULL,
+    updated_at TIMESTAMP NOT NULL
 )
