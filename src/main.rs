@@ -15,7 +15,7 @@ mod database;
 mod schema;
 
 fn main() {
-    let database = Database{};
+    let database = Database::from_dot_env();
     let vehicles = fetch_vehicles();
     database.update_vehicles(vehicles);
     database.get_vehicle_count();
